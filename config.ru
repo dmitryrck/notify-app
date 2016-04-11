@@ -16,6 +16,35 @@ Mail.defaults do
 end
 
 class Notify < Sinatra::Base
+  helpers do
+    def delivery(params: {}, env: {})
+      body = "# Params: \n"
+      params.each do |key, value|
+        body += "* #{key} => #{value}\n"
+      end
+
+      body += "# Aditional info (From env): \n"
+      env.each do |key, value|
+        body += "* #{key} => #{value}\n"
+      end
+
+      message = Mail.new
+
+      message['from']            = ENV['FROM']
+      message['to']              = ENV['EMAILS']
+      message['subject']         = '[NotifyApp]'
+      message['body']            = body
+      message['delivery_method'] = :smtp
+
+      message.deliver
+    end
+  end
+
+  get '/robots.txt' do
+    %[User-agent: *
+Disallow: /]
+  end
+
   get    '*' do 'Hi.' end
   post   '*' do 'Hi.' end
   put    '*' do 'Hi.' end
@@ -23,25 +52,9 @@ class Notify < Sinatra::Base
   delete '*' do 'Hi.' end
 
   after do
-    body = "# Params: \n"
-    params.each do |key, value|
-      body += "* #{key} => #{value}\n"
+    if env['PATH_INFO'] != '/robots.txt'
+      delivery(params: params, env: env)
     end
-
-    body += "# Aditional info (From env): \n"
-    env.each do |key, value|
-      body += "* #{key} => #{value}\n"
-    end
-
-    message = Mail.new
-
-    message['from']            = ENV['FROM']
-    message['to']              = ENV['EMAILS']
-    message['subject']         = '[NotifyApp]'
-    message['body']            = body
-    message['delivery_method'] = :smtp
-
-    message.deliver
   end
 end
 
