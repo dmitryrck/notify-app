@@ -8,6 +8,7 @@ GEM
     postmark (1.7.1)
       json
       rake
+    puma (3.4.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -24,6 +25,7 @@ PLATFORMS
 DEPENDENCIES
   mail
   postmark
+  puma
   sinatra
 
 BUNDLED WITH
