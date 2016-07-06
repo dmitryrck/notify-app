@@ -28,6 +28,11 @@ class Notify < Sinatra::Base
         body += "* #{key} => #{value}\n"
       end
 
+      body += "# request body: \n"
+      request.body.each do |request_body|
+        body += request_body
+      end
+
       message = Mail.new
 
       message['from']            = ENV['FROM']
