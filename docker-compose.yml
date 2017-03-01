@@ -8,3 +8,15 @@ services:
     command: forego start
     ports:
       - "5000:5000"
+
+  heroku:
+    build:
+      context: .
+      dockerfile: Dockerfile.heroku
+    volumes:
+      - .:/app
+      - heroku:/root
+    command: rake test
+
+volumes:
+  heroku:
