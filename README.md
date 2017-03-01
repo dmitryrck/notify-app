@@ -7,3 +7,7 @@
     Email: heroku@example.com
     Password (typing will be hidden):
     Logged in as heroku@example.com
+
+# Run tests
+
+    % docker-compose run --rm web rake test
