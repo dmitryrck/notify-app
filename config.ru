@@ -15,4 +15,5 @@ Mail.defaults do
   }
 end
 
+require "./notify_app"
 run NotifyApp
