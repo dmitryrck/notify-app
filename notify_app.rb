@@ -20,7 +20,7 @@ class NotifyApp < Sinatra::Base
 
       message['from']            = ENV['FROM']
       message['to']              = ENV['EMAILS']
-      message['subject']         = '[NotifyApp]'
+      message['subject']         = params.fetch("subject", "[NotifyApp]")
       message['body']            = body
       message['delivery_method'] = :smtp
 

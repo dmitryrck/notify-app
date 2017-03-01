@@ -50,28 +50,42 @@ class MyTest < MiniTest::Test
   def test_body_params
     delete "/"
     assert last_response.ok?
-    assert_equal "Ok", last_response.body
     assert_match "REQUEST_METHOD => DELETE", Mail::TestMailer.deliveries.first.body.to_s
   end
 
   def test_url_info
     get "/abc/def"
     assert last_response.ok?
-    assert_equal "Ok", last_response.body
     assert_match "abc/def", Mail::TestMailer.deliveries.first.body.to_s
   end
 
   def test_url_params
     get "/abc/def?ghi=jkl"
     assert last_response.ok?
-    assert_equal "Ok", last_response.body
     assert_match (/ghi.*jkl/), Mail::TestMailer.deliveries.first.body.to_s
   end
 
   def test_post_params
     post "/abc/def", ghi: :jkl
     assert last_response.ok?
-    assert_equal "Ok", last_response.body
     assert_match (/ghi.*jkl/), Mail::TestMailer.deliveries.first.body.to_s
+  end
+
+  def test_subject
+    post "/abc/def"
+    assert last_response.ok?
+    assert_equal "[NotifyApp]", Mail::TestMailer.deliveries.first.subject
+  end
+
+  def test_subject_from_get
+    get "/abc/def?subject=MyApp"
+    assert last_response.ok?
+    assert_equal "MyApp", Mail::TestMailer.deliveries.first.subject
+  end
+
+  def test_subject_from_post
+    post "/abc/def", subject: "MyPostApp"
+    assert last_response.ok?
+    assert_equal "MyPostApp", Mail::TestMailer.deliveries.first.subject
   end
 end
