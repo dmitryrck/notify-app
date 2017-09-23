@@ -1,9 +1,8 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'mail'
-gem 'postmark'
-gem 'puma'
-gem 'sinatra'
+gem "aws-ses"
+gem "puma"
+gem "sinatra"
 
 group :test do
   gem "minitest"
