@@ -40,7 +40,7 @@ Disallow: /]
   delete '*' do 'Ok' end
 
   after do
-    if env['PATH_INFO'] != '/robots.txt'
+    unless ["/robots.txt", "/favicon.ico"].include?(env["PATH_INFO"])
       delivery(params: params, env: env)
     end
   end
