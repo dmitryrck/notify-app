@@ -1,22 +1,17 @@
 version: "2"
 
 services:
-  web:
-    build: .
+  app:
+    image: ruby
     volumes:
       - .:/app
-    command: forego start
+      - bundle_path:/usr/local/bundle
+    environment:
+      - PORT=5000
+    working_dir: /app
+    command: bundle exec rackup -o 0.0.0.0 -p 5000 -s puma
     ports:
       - "5000:5000"
 
-  heroku:
-    build:
-      context: .
-      dockerfile: Dockerfile.heroku
-    volumes:
-      - .:/app
-      - heroku:/root
-    working_dir: /app
-
 volumes:
-  heroku:
+  bundle_path:
