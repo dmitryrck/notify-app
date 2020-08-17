@@ -24,7 +24,11 @@ class NotifyApp < Sinatra::Base
       message['body']            = body
       message['delivery_method'] = :smtp
 
-      $ses.send_raw_email(message)
+      if $ses
+        $ses.send_raw_email(message)
+      else
+        puts body
+      end
     end
   end
 
