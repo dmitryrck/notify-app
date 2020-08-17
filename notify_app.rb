@@ -1,4 +1,6 @@
 class NotifyApp < Sinatra::Base
+  DEFAULT_OUTPUT = '{"ok":true}'
+
   helpers do
     def delivery(params: {}, env: {})
       body = "# Params: \n"
@@ -37,11 +39,11 @@ class NotifyApp < Sinatra::Base
 Disallow: /]
   end
 
-  get    '*' do 'Ok' end
-  post   '*' do 'Ok' end
-  put    '*' do 'Ok' end
-  patch  '*' do 'Ok' end
-  delete '*' do 'Ok' end
+  get    '*' do DEFAULT_OUTPUT end
+  post   '*' do DEFAULT_OUTPUT end
+  put    '*' do DEFAULT_OUTPUT end
+  patch  '*' do DEFAULT_OUTPUT end
+  delete '*' do DEFAULT_OUTPUT end
 
   after do
     unless ["/robots.txt", "/favicon.ico"].include?(env["PATH_INFO"])
