@@ -18,16 +18,17 @@ class NotifyApp < Sinatra::Base
         body += request_body
       end
 
-      message = Mail.new
-
-      message['from']            = ENV['FROM']
-      message['to']              = ENV['EMAILS']
-      message['subject']         = params.fetch("subject", "[NotifyApp]")
-      message['body']            = body
-      message['delivery_method'] = :smtp
+      message = {
+        destination: { to_addresses: ENV["EMAILS"].split(",") },
+        message: {
+          body: { text: { charset: "UTF-8", data: body } },
+          subject: { charset: "UTF-8", data: params.fetch("subject", "[NotifyApp]") },
+        },
+        source: ENV["FROM"],
+      }
 
       if $ses
-        $ses.send_raw_email(message)
+        $ses.send_email(message)
       else
         puts body
       end

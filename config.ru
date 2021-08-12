@@ -6,9 +6,9 @@ Bundler.require
 $ses = if ENV["AMAZON_ACCESS_KEY_ID"].nil? || ENV["AMAZON_SECRET_ACCESS_KEY"].nil?
          nil
        else
-         AWS::SES::Base.new(
-           access_key_id: ENV["AMAZON_ACCESS_KEY_ID"],
-           secret_access_key: ENV["AMAZON_SECRET_ACCESS_KEY"],
+         Aws::SES::Client.new(
+           region: ENV.fetch("AMAZON_REGION") { "us-east-1" },
+           credentials: Aws::Credentials.new(ENV["AMAZON_ACCESS_KEY_ID"], ENV["AMAZON_SECRET_ACCESS_KEY"]),
          )
        end
 

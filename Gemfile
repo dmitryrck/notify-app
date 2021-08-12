@@ -1,7 +1,8 @@
 source "https://rubygems.org"
 
-gem "aws-ses"
+gem "aws-sdk-ses"
 gem "puma"
+gem "rake"
 gem "sinatra"
 
 group :test do
