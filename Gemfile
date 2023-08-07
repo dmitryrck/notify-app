@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 gem "aws-sdk-ses"
+gem "nokogiri" # aws-sdk-ses
 gem "puma"
 gem "rake"
 gem "sinatra"

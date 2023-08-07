@@ -14,12 +14,17 @@ GEM
     aws-sigv4 (1.6.0)
       aws-eventstream (~> 1, >= 1.0.2)
     jmespath (1.6.2)
+    mini_portile2 (2.8.4)
     minitest (5.19.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.9)
+    nokogiri (1.15.3)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     puma (6.3.0)
       nio4r (~> 2.0)
+    racc (1.7.1)
     rack (2.2.8)
     rack-protection (3.1.0)
       rack (~> 2.2, >= 2.2.4)
@@ -40,6 +45,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-ses
   minitest
+  nokogiri
   puma
   rack-test
   rake
