@@ -14,7 +14,7 @@ class NotifyApp < Sinatra::Base
       end
 
       body += "# request body: \n"
-      request.body.each do |request_body|
+      (request.body || []).each do |request_body|
         body += request_body
       end
 

@@ -5,13 +5,27 @@ require 'bundler/setup'
 
 Bundler.require
 
+require "minitest"
+require "minitest/mock"
 require "rack/test"
-require "mail"
 
 ENV["FROM"] = ENV["EMAILS"] = "abc@example.com"
 
-Mail.defaults do
-  delivery_method :test
+$ses = Minitest::Mock.new
+def $ses.send_email(message)
+  @message = message
+end
+
+def $ses.message
+  @message
+end
+
+def $ses.subject
+  message[:message][:subject][:data]
+end
+
+def $ses.body
+  message[:message][:body][:text][:data]
 end
 
 require "./notify_app"
